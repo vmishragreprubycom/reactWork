@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 const EmailField = (props) => (
   <div className="form-group">
     <label htmlFor="email">Email:</label>
-    <Input type="email" placeholder="Enter email" onChange={props.onChange} error={props.error}/>
-    <div style={{color : "red"}}>
+    <Input 
+      type="email" 
+      placeholder="Enter email" 
+      className="form-control"
+      onChange={props.onChange} 
+    />
+    <div className="text-danger">
       {props.error}
     </div>
   </div>

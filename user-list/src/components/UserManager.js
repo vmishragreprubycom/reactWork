@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from './Button';
-import User from './User';
 import UserTable from './UserTable';
 import UserForm from './UserForm';
 
@@ -20,13 +19,10 @@ export default class UserManager extends React.Component {
     this.onCancel = this.onCancel.bind(this); 
     this.onUserEdit = this.onUserEdit.bind(this);
     this.onUserDelete = this.onUserDelete.bind(this);
-    this.getAllUsers = this.getAllUsers.bind(this);
   }
 
   saveUsers(users){
     this.setState({users});
-    console.log("user is saved");
-   // this.state.users=users;
   }
 
   showAddUserForm(event) {
@@ -35,7 +31,6 @@ export default class UserManager extends React.Component {
   }
 
   onAdd(user) {
-    alert("from onAdd user manager");
     let users = this.state.users.slice();
 
     user.id = Date.now();
@@ -50,17 +45,11 @@ export default class UserManager extends React.Component {
   }
 
   onUserEdit(event) {
-    console.log("on user edit clicked");
+    //starting work here.
   }
 
   onUserDelete() {
-    console.log("on user delete clicked");
-  }
-
-  getAllUsers() {
-    return (this.state.users.map((user, index) => (
-      <User onUserEdit={this.onUserEdit} onUserDelete={this.onUserDelete} key={index} user={user} />
-    )))
+    //need to do work
   }
 
   render() {
@@ -71,7 +60,11 @@ export default class UserManager extends React.Component {
           <UserForm onAdd={this.onAdd} onCancel={this.onCancel}/> :
           <div>
             <Button className="btn" action={this.showAddUserForm} label="add user" />
-            <UserTable users={this.getAllUsers()}/>
+            <UserTable 
+              users={this.state.users} 
+              onUserEdit={this.onUserEdit} 
+              onUserDelete={this.onUserDelete} 
+            />
           </div>
         }
       </div>

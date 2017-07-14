@@ -31,24 +31,20 @@ export default class UserForm extends React.Component {
     this.onCancel = this.onCancel.bind(this);
   }
 
-  handleNameChange(e) {
-    this.setState({name : e.target.value});
-    console.log("name : "+e.target.value);
+  handleNameChange(event) {
+    this.setState({name : event.target.value});
   }
 
-  handleEmailChange(e) {
-    this.setState({email : e.target.value});
-    console.log("email : "+e.target.value);
+  handleEmailChange(event) {
+    this.setState({email : event.target.value});
   }
 
-  handlePhoneChange(e) {
-    this.setState({phone : e.target.value});
-    console.log("phone : "+e.target.value);
+  handlePhoneChange(event) {
+    this.setState({phone : event.target.value});
   }
 
-  handleBirthdayChange(e) {
-    this.setState({dob : e.target.value});
-    console.log("dob : "+e.target.value);
+  handleBirthdayChange(event) {
+    this.setState({dob : event.target.value});
   }
 
   invalidForm() {
@@ -56,42 +52,34 @@ export default class UserForm extends React.Component {
     if (!(/^\w+[a-zA-z\s]*$/.test(this.state.name))) {
       this.setState({nameError : "please enter valid name" });
       invalid = true;
-      console.log("inavlid name");
     } else {
        this.setState({nameError : "" });
-        console.log("valid name");
     }
     if(!(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(this.state.email))) {
       this.setState({emailError : "please enter valid email address" });
       invalid = true;
-      console.log("inavlid email");
     } else {
        this.setState({emailError : "" });
-        console.log("valid email");
     }
     if(!(/^[7-9]{1}[0-9]{9}$/.test(this.state.phone))) {
       this.setState({phoneError : "please enter valid phone number" });
       invalid = true;
-      console.log("inavlid phone");
     } else {
        this.setState({phoneError : "" });
-        console.log("valid phone");
     }
      if((this.state.dob)==="") {
       this.setState({dobError : "please enter valid birth date" });
       invalid = true;
-      console.log("inavlid dob");
     } else {
        this.setState({dobError : "" });
-        console.log("valid dob");
     }
 
     return invalid;
   }
 
-  onAdd(e) {
-    if(e)
-      e.preventDefault();
+  onAdd(event) {
+    if(event)
+      event.preventDefault();
 
     if (this.invalidForm())
       return;
@@ -105,9 +93,9 @@ export default class UserForm extends React.Component {
     this.props.onAdd(user);
   }
 
-  onCancel(e) {
-    if(e) 
-      e.preventDefault();
+  onCancel(event) {
+    if(event) 
+      event.preventDefault();
     this.props.onCancel();
   }
 

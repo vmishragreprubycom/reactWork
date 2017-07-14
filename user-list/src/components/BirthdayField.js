@@ -5,8 +5,13 @@ import PropTypes from 'prop-types';
 const BirthdayField = (props) => (
   <div className="form-group">
     <label htmlFor="date">Birthday:</label>
-    <Input type="date" className="form-control" onChange={props.onChange} error={props.error}/>
-    <div style={{color : "red"}}>
+    <Input 
+      type="date" 
+      className="form-control"
+      placeholder="enter Birthday here"
+      onChange={props.onChange} 
+    />
+    <div className="text-danger">
       {props.error}
     </div>
   </div>

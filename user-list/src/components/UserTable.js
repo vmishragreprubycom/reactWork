@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import User from './User';
 
 const UserTable = (props) => (
       <table className="table table-stripped">
         <UserTableHead />
-        <UserTableBody users={props.users}/>
+        <UserTableBody onUserDelete={props.onUserDelete} onUserEdit={props.onUserEdit} users={props.users}/>
       </table>
 )
 
@@ -20,19 +21,34 @@ const UserTableHead = () => (
   </thead>
 )
 
-const UserTableBody = (props) => (
-  <tbody>
-    {props.users}
-  </tbody>
-)
+const UserTableBody = (props) => {
+  const users = props.users.map((user, index) => (
+      <User 
+        onUserEdit={props.onUserEdit} 
+        onUserDelete={props.onUserDelete} 
+        key={index} 
+        user={user} 
+      />
+    ));
+
+  return (
+    <tbody>
+      {users}
+    </tbody>
+  )
+}
 
 PropTypes.UserTable = {
-  users: PropTypes.arrayOf(PropTypes.object).isRequired
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onUserEdit: PropTypes.func.isRequired,
+  onUserDelete: PropTypes.func.isRequired
 }
 
 
 PropTypes.UserTableBody = {
-  users: PropTypes.object.isRequired
+  users: PropTypes.object.isRequired,
+  onUserEdit: PropTypes.func.isRequired,
+  onUserDelete: PropTypes.func.isRequired
 }
 
 export default UserTable;

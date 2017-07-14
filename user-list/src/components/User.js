@@ -19,7 +19,8 @@ const User = (props) => (
 User.propTypes = {  
   onUserDelete: PropTypes.func.isRequired,
   onUserEdit: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  key : PropTypes.object.isRequired
 }
 
 export default User;
