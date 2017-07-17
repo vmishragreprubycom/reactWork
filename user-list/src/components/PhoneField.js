@@ -10,6 +10,7 @@ const PhoneField = (props) => (
       className="form-control" 
       placeholder="Enter phone no" 
       onChange={props.onChange} 
+      value={props.phone}
     />
     <div className="text-danger">
       {props.error}
@@ -19,7 +20,8 @@ const PhoneField = (props) => (
 
 PhoneField.propTypes = {
   onChange: PropTypes.func.isRequired,
-  error : PropTypes.string
+  error : PropTypes.string,
+  phone : PropTypes.string.isRequired
 } 
 
 export default PhoneField;

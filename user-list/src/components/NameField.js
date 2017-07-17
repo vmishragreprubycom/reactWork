@@ -10,6 +10,7 @@ const NameField = (props) => (
         className="form-control" 
         placeholder="Enter name" 
         onChange={props.onChange} 
+        value={props.name}
       />
       <div className="text-danger">
         {props.error}
@@ -20,7 +21,7 @@ const NameField = (props) => (
 NameField.propTypes = {
   onChange : PropTypes.func.isRequired,
   name : PropTypes.string.isRequired,
-  error : PropTypes.string
+  error : PropTypes.string,
 }
 
 export default NameField;

@@ -5,7 +5,7 @@ import User from './User';
 const UserTable = (props) => (
       <table className="table table-stripped">
         <UserTableHead />
-        <UserTableBody onUserDelete={props.onUserDelete} onUserEdit={props.onUserEdit} users={props.users}/>
+        <UserTableBody userToDelete={props.userToDelete} userToEdit={props.userToEdit} users={props.users}/>
       </table>
 )
 
@@ -24,9 +24,10 @@ const UserTableHead = () => (
 const UserTableBody = (props) => {
   const users = props.users.map((user, index) => (
       <User 
-        onUserEdit={props.onUserEdit} 
-        onUserDelete={props.onUserDelete} 
+        userToEdit={props.userToEdit} 
+        userToDelete={props.userToDelete} 
         key={index} 
+        id={user.id}
         user={user} 
       />
     ));
@@ -40,15 +41,15 @@ const UserTableBody = (props) => {
 
 PropTypes.UserTable = {
   users: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onUserEdit: PropTypes.func.isRequired,
-  onUserDelete: PropTypes.func.isRequired
+  userToEdit: PropTypes.func.isRequired,
+  userToDelete: PropTypes.func.isRequired
 }
 
 
 PropTypes.UserTableBody = {
   users: PropTypes.object.isRequired,
-  onUserEdit: PropTypes.func.isRequired,
-  onUserDelete: PropTypes.func.isRequired
+  userToEdit: PropTypes.func.isRequired,
+  userToDelete: PropTypes.func.isRequired
 }
 
 export default UserTable;

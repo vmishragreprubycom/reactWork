@@ -10,6 +10,7 @@ const EmailField = (props) => (
       placeholder="Enter email" 
       className="form-control"
       onChange={props.onChange} 
+      value={props.email}
     />
     <div className="text-danger">
       {props.error}
@@ -19,7 +20,8 @@ const EmailField = (props) => (
 
 EmailField.propTypes = {
   onChange: PropTypes.func.isRequired,
-  error : PropTypes.string
+  error : PropTypes.string,
+  email : PropTypes.string.isRequired
 } 
 
 export default EmailField;

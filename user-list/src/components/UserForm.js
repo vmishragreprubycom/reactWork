@@ -8,10 +8,9 @@ import Button from './Button';
 import PropTypes from 'prop-types';
 
 export default class UserForm extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
+  constructor(props) {
+    super(props);
+    const empty = {
       name: "",
       email: "",
       phone: "",
@@ -22,6 +21,8 @@ export default class UserForm extends React.Component {
       dobError : "" 
     };
     
+    this.state = props.user || empty;
+
     this.handleBirthdayChange = this.handleBirthdayChange.bind(this);
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -29,6 +30,7 @@ export default class UserForm extends React.Component {
 
     this.onAdd = this.onAdd.bind(this);
     this.onCancel = this.onCancel.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
   }
 
   handleNameChange(event) {
@@ -99,6 +101,22 @@ export default class UserForm extends React.Component {
     this.props.onCancel();
   }
 
+  onUpdate(event) {
+    if(event)
+      event.preventDefault();
+
+    if (this.invalidForm())
+      return;
+
+    const user = {...this.state};
+    delete user.nameError;
+    delete user.phoneError;
+    delete user.emailError;
+    delete user.dobError;
+
+    this.props.onUpdate(user);
+  }
+
   render() {
     return (
       <form className="col-lg-6">
@@ -106,7 +124,12 @@ export default class UserForm extends React.Component {
         <EmailField email={this.state.email} onChange={this.handleEmailChange} error={this.state.emailError}/>
         <PhoneField phone={this.state.phone} onChange={this.handlePhoneChange} error={this.state.phoneError}/>
         <BirthdayField dob={this.state.dob} onChange={this.handleBirthdayChange} error={this.state.dobError}/>
-        <SubmitButton label="add" action={this.onAdd}/>&nbsp; 
+        {
+          this.props.user ?
+            <SubmitButton label="update" action={this.onUpdate}/> :
+            <SubmitButton label="add" action={this.onAdd}/>
+        }
+        &nbsp;
         <Button className="btn btn-danger" action={this.onCancel} label="cancel"/>
       </form>
     )
@@ -115,5 +138,6 @@ export default class UserForm extends React.Component {
 
 UserForm.propTypes = {
   onCancel: PropTypes.func.isRequired,
-  onAdd: PropTypes.func.isRequired
+  onAdd: PropTypes.func,
+  onUpdate: PropTypes.func
 }

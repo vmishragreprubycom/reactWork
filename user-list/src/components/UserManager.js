@@ -11,14 +11,16 @@ export default class UserManager extends React.Component {
 
     this.state = { 
       users,
-      showAddUserForm: false
+      showAddUserForm: false,
+      editing : false
     };
 
     this.showAddUserForm = this.showAddUserForm.bind(this);  
     this.onAdd = this.onAdd.bind(this);
     this.onCancel = this.onCancel.bind(this); 
-    this.onUserEdit = this.onUserEdit.bind(this);
-    this.onUserDelete = this.onUserDelete.bind(this);
+    this.onUpdate = this.onUpdate.bind(this);
+    this.userToEdit = this.userToEdit.bind(this);
+    this.userToDelete = this.userToDelete.bind(this);
   }
 
   saveUsers(users){
@@ -41,31 +43,76 @@ export default class UserManager extends React.Component {
   }
 
   onCancel() {
-    this.setState({showAddUserForm : false});
+    this.setState({
+      showAddUserForm : false,
+      editing : false
+    });
   }
 
-  onUserEdit(event) {
-    //starting work here.
+  onUpdate(user) {
+    const users = this.state.users.slice();
+    
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].id === user.id) {
+        users[i] = user;
+        this.saveUsers(users);
+        break;
+      }
+    }
+
+    this.setState({users, editing: false, userToEdit: null});
   }
 
-  onUserDelete() {
-    //need to do work
+  userToEdit(event) {
+    for (let i = 0; i < this.state.users.length; i++) {
+      if (this.state.users[i].id === Number(event.target.id)) {
+        const userToEdit = {...this.state.users[i]};
+        this.setState({
+          userToEdit,
+          editing: true, 
+          showAddUserForm : false
+        });
+        break;
+      }
+    }
+
   }
+
+  deleteUser(index) {
+    if (window.confirm(`Do you really want to delete ${this.state.users[index].name}`)) {
+      const users = this.state.users.slice();
+      users.splice(index, 1);
+      this.saveUsers(users);
+      this.setState({users});
+    }
+  }
+
+  userToDelete(event) {
+    for (let i = 0; i < this.state.users.length; i++) {
+      if(this.state.users[i].id === Number(event.target.id)) {
+        this.deleteUser(i);
+        break;
+      }
+    }
+  }
+  
 
   render() {
     return (
       <div>
         {
-          this.state.showAddUserForm ? 
-          <UserForm onAdd={this.onAdd} onCancel={this.onCancel}/> :
-          <div>
-            <Button className="btn" action={this.showAddUserForm} label="add user" />
-            <UserTable 
-              users={this.state.users} 
-              onUserEdit={this.onUserEdit} 
-              onUserDelete={this.onUserDelete} 
-            />
-          </div>
+          this.state.editing ? 
+            <UserForm onUpdate={this.onUpdate} user={this.state.userToEdit} onCancel={this.onCancel} /> :  
+            this.state.showAddUserForm ? 
+              <UserForm onAdd={this.onAdd} onCancel={this.onCancel}/> :
+              <div>
+                <Button className="btn" action={this.showAddUserForm} label="add user" />
+                <UserTable 
+                  users={this.state.users} 
+                  userToEdit={this.userToEdit} 
+                  userToDelete={this.userToDelete} 
+                />
+              </div>
         }
       </div>
     )

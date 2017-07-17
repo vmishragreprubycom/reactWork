@@ -9,18 +9,18 @@ const User = (props) => (
     <td>{props.user.phone}</td>
     <td>{props.user.dob}</td>
     <td>
-      <Button action={props.onUserEdit} user={props.user} label="edit" className="btn btn-primary"/>
+      <Button action={props.userToEdit} label="edit" id={props.id} className="btn btn-primary"/>
       &nbsp;
-      <Button action={props.onUserDelete} user={props.user} label="delete" className="btn btn-danger"/>
+      <Button action={props.userToDelete} label="delete" id={props.id} className="btn btn-danger"/>
     </td>
   </tr>
 )
 
 User.propTypes = {  
-  onUserDelete: PropTypes.func.isRequired,
-  onUserEdit: PropTypes.func.isRequired,
+  userToEdit: PropTypes.func.isRequired,
+  userToDelete: PropTypes.func.isRequired,
   user: PropTypes.object.isRequired,
-  key : PropTypes.object.isRequired
+  id: PropTypes.number.isRequired 
 }
 
 export default User;

@@ -10,6 +10,7 @@ const BirthdayField = (props) => (
       className="form-control"
       placeholder="enter Birthday here"
       onChange={props.onChange} 
+      value={props.dob}
     />
     <div className="text-danger">
       {props.error}
@@ -19,7 +20,8 @@ const BirthdayField = (props) => (
 
 BirthdayField.propTypes = {
   onChange: PropTypes.func.isRequired, 
-  error : PropTypes.string
+  error : PropTypes.string,
+  dob : PropTypes.string.isRequired
 }
 
 export default BirthdayField;
