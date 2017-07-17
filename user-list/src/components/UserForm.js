@@ -22,34 +22,21 @@ export default class UserForm extends React.Component {
     };
     
     this.state = props.user || empty;
-
-    this.handleBirthdayChange = this.handleBirthdayChange.bind(this);
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleEmailChange = this.handleEmailChange.bind(this);
-    this.handlePhoneChange = this.handlePhoneChange.bind(this);
-
-    this.onAdd = this.onAdd.bind(this);
-    this.onCancel = this.onCancel.bind(this);
-    this.onUpdate = this.onUpdate.bind(this);
   }
 
-  handleNameChange(event) {
-    this.setState({name : event.target.value});
-  }
+  handleNameChange = (event) => this.setState({name : event.target.value});
+  
 
-  handleEmailChange(event) {
-    this.setState({email : event.target.value});
-  }
+  handleEmailChange = (event) => this.setState({email : event.target.value});
+  
 
-  handlePhoneChange(event) {
-    this.setState({phone : event.target.value});
-  }
+  handlePhoneChange = (event) => this.setState({phone : event.target.value});
+  
 
-  handleBirthdayChange(event) {
-    this.setState({dob : event.target.value});
-  }
+  handleBirthdayChange = (event) => this.setState({dob : event.target.value});
+  
 
-  invalidForm() {
+  invalidForm = () => {
     let invalid = false;
     if (!(/^\w+[a-zA-z\s]*$/.test(this.state.name))) {
       this.setState({nameError : "please enter valid name" });
@@ -79,7 +66,7 @@ export default class UserForm extends React.Component {
     return invalid;
   }
 
-  onAdd(event) {
+  onAdd = (event) => {
     if(event)
       event.preventDefault();
 
@@ -95,13 +82,13 @@ export default class UserForm extends React.Component {
     this.props.onAdd(user);
   }
 
-  onCancel(event) {
+  onCancel = (event) => {
     if(event) 
       event.preventDefault();
     this.props.onCancel();
   }
 
-  onUpdate(event) {
+  onUpdate = (event) => {
     if(event)
       event.preventDefault();
 
@@ -117,7 +104,7 @@ export default class UserForm extends React.Component {
     this.props.onUpdate(user);
   }
 
-  render() {
+  render = () => {
     return (
       <form className="col-lg-6">
         <NameField name={this.state.name} onChange={this.handleNameChange} error={this.state.nameError}/>

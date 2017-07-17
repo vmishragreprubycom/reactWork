@@ -1,7 +1,6 @@
 import React from 'react';
-import Button from './Button';
-import UserTable from './UserTable';
 import UserForm from './UserForm';
+import UserTableWithAddButton from './UserTableWithAddButton';
 
 export default class UserManager extends React.Component {
   constructor() {
@@ -14,90 +13,61 @@ export default class UserManager extends React.Component {
       showAddUserForm: false,
       editing : false
     };
-
-    this.showAddUserForm = this.showAddUserForm.bind(this);  
-    this.onAdd = this.onAdd.bind(this);
-    this.onCancel = this.onCancel.bind(this); 
-    this.onUpdate = this.onUpdate.bind(this);
-    this.userToEdit = this.userToEdit.bind(this);
-    this.userToDelete = this.userToDelete.bind(this);
   }
 
-  saveUsers(users){
-    this.setState({users});
+  saveUsers = (users) => {
+    this.setState({ users }, () => this.stopEditing());
   }
 
-  showAddUserForm(event) {
-    event.preventDefault();
-    this.setState({showAddUserForm: true});
+  formVisibility = (visibility) => {
+    this.setState({showAddUserForm : visibility});
   }
 
-  onAdd(user) {
+  stopEditing = () => this.setState({editing: false}, () => this.formVisibility(false));
+  
+
+  startEditing = () => this.setState({editing: true});
+  
+
+  onAdd = (user) => {
     let users = this.state.users.slice();
 
     user.id = Date.now();
     users.unshift(user);
 
     this.saveUsers(users);
-    this.setState({users,showAddUserForm: false});
   }
 
-  onCancel() {
-    this.setState({
-      showAddUserForm : false,
-      editing : false
-    });
+  onCancel = () => this.stopEditing();
+  
+
+  onUpdate = (user) => {
+    let userIndex = this.state.users.findIndex(obj => (obj.id === user.id));
+    let users = this.state.users.slice();
+    users[userIndex]  =  user;
+    this.saveUsers(users);
   }
 
-  onUpdate(user) {
-    const users = this.state.users.slice();
-    
-    for (let i = 0; i < users.length; i++) {
-      if (users[i].id === user.id) {
-        users[i] = user;
-        this.saveUsers(users);
-        break;
-      }
-    }
-
-    this.setState({users, editing: false, userToEdit: null});
+  userToEdit = (event) => {
+    const userToEdit = (this.state.users.filter(obj => obj.id === Number(event.target.id)))[0];
+    this.setState({ userToEdit },() => this.startEditing(), ()=> this.hideAddUserForm());
   }
 
-  userToEdit(event) {
-    for (let i = 0; i < this.state.users.length; i++) {
-      if (this.state.users[i].id === Number(event.target.id)) {
-        const userToEdit = {...this.state.users[i]};
-        this.setState({
-          userToEdit,
-          editing: true, 
-          showAddUserForm : false
-        });
-        break;
-      }
-    }
-
-  }
-
-  deleteUser(index) {
+  deleteUser = (index) => {
     if (window.confirm(`Do you really want to delete ${this.state.users[index].name}`)) {
       const users = this.state.users.slice();
       users.splice(index, 1);
       this.saveUsers(users);
-      this.setState({users});
     }
   }
 
-  userToDelete(event) {
-    for (let i = 0; i < this.state.users.length; i++) {
-      if(this.state.users[i].id === Number(event.target.id)) {
-        this.deleteUser(i);
-        break;
-      }
-    }
+  userToDelete = (event) => {
+    let index = this.state.users.findIndex(obj => (obj.id === Number(event.target.id)));
+    this.deleteUser(index);
   }
   
 
-  render() {
+  render = () => {
     return (
       <div>
         {
@@ -105,14 +75,12 @@ export default class UserManager extends React.Component {
             <UserForm onUpdate={this.onUpdate} user={this.state.userToEdit} onCancel={this.onCancel} /> :  
             this.state.showAddUserForm ? 
               <UserForm onAdd={this.onAdd} onCancel={this.onCancel}/> :
-              <div>
-                <Button className="btn" action={this.showAddUserForm} label="add user" />
-                <UserTable 
-                  users={this.state.users} 
-                  userToEdit={this.userToEdit} 
-                  userToDelete={this.userToDelete} 
-                />
-              </div>
+              <UserTableWithAddButton 
+                action={this.formVisibility}
+                users={this.state.users} 
+                userToEdit={this.userToEdit} 
+                userToDelete={this.userToDelete}
+              />
         }
       </div>
     )

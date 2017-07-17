@@ -3,10 +3,14 @@ import PropTypes from 'prop-types';
 import User from './User';
 
 const UserTable = (props) => (
-      <table className="table table-stripped">
-        <UserTableHead />
-        <UserTableBody userToDelete={props.userToDelete} userToEdit={props.userToEdit} users={props.users}/>
-      </table>
+  <table className="table table-stripped">
+    <UserTableHead />
+    <UserTableBody 
+      userToDelete={props.userToDelete} 
+      userToEdit={props.userToEdit} 
+      users={props.users}
+    />
+  </table>
 )
 
 const UserTableHead = () => (

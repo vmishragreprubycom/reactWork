@@ -1,21 +1,18 @@
 import React from 'react';
-import Input from './Input';
+import FormControl from './FormControl';
 import PropTypes from 'prop-types';
 
 const BirthdayField = (props) => (
-  <div className="form-group">
-    <label htmlFor="date">Birthday:</label>
-    <Input 
-      type="date" 
-      className="form-control"
-      placeholder="enter Birthday here"
-      onChange={props.onChange} 
-      value={props.dob}
-    />
-    <div className="text-danger">
-      {props.error}
-    </div>
-  </div>
+   <FormControl 
+    htmlFor="dob"
+    label="Birthday"
+    type="date" 
+    className="form-control" 
+    placeholder="Enter your Birthday" 
+    onChange={props.onChange} 
+    value={props.dob}
+    error={props.error}
+  />
 );
 
 BirthdayField.propTypes = {

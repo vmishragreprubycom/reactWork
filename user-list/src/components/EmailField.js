@@ -1,21 +1,18 @@
 import React from 'react';
-import Input from './Input';
+import FormControl from './FormControl';
 import PropTypes from 'prop-types';
 
 const EmailField = (props) => (
-  <div className="form-group">
-    <label htmlFor="email">Email:</label>
-    <Input 
-      type="email" 
-      placeholder="Enter email" 
-      className="form-control"
-      onChange={props.onChange} 
-      value={props.email}
-    />
-    <div className="text-danger">
-      {props.error}
-    </div>
-  </div>
+  <FormControl 
+    htmlFor="email"
+    label="Email"
+    type="email" 
+    className="form-control" 
+    placeholder="Enter Your Email" 
+    onChange={props.onChange} 
+    value={props.email}
+    error={props.error}
+  />
 );
 
 EmailField.propTypes = {
